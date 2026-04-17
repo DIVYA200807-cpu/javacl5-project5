@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+        
+            .container {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+        
+            h2 {
+                color: #333;
+                border-bottom: 2px solid #4CAF50;
+                padding-bottom: 10px;
+            }
+        
+            pre {
+                background: #f4f4f4;
+                padding: 15px;
+                border-radius: 5px;
+                overflow-x: auto;
+                font-size: 14px;
+            }
+        
+            .output {
+                background: #e8f5e8;
+                border-left: 4px solid #4CAF50;
+                padding: 15px;
+                margin: 10px 0;
+            }
+        
+            button {
+                background: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 5px;
+            }
+        
+            button:hover {
+                background: #45a049;
+            }
+        </style>
+</head>
+<body>
+    <h1>📚 JavaScript: Objects, Arrays & Call Stack Demo</h1>
+    
+    <div class="container">
+        <h2>1. Object Data Structure</h2>
+        <button onclick="demoObject()">Run Object Demo</button>
+        <div id="objectOutput"></div>
+    </div>
+    <div class="container">
+        <h2>2. Array Introduction</h2>
+        <button onclick="demoArray()">Run Array Demo</button>
+        <div id="arrayOutput"></div>
+    </div>
+    
+    <div class="container">
+        <h2>3. Call Stack Visualization</h2>
+        <button onclick="demoCallStack()">Run Call Stack</button>
+        <div id="callStackOutput"></div>
+    </div>
+    
+    <div class="container">
+        <h2>4. Array Methods (join, pop)</h2>
+        <button onclick="demoArrayMethods()">Run Array Methods</button>
+        <div id="arrayMethodsOutput"></div>
+    </div>
+    
+    <script>
+        // 1. OBJECT DATA STRUCTURE
+        function demoObject() {
+            const person = {
+                name: "divya",
+                age: 17,
+                city: "Delhi",
+                skills: ["JavaScript", "HTML", "CSS"],
+                address: {
+                    street: "model town",
+                    pincode: 110009
+                }
+            };
+
+            let output = `
+                    <div class="output">
+                        <h3>🧑 Object: person</h3>
+                        <pre>
+    name: ${person.name}
+    age: ${person.age}
+    city: ${person.city}
+    skills: ${JSON.stringify(person.skills)}
+    address.street: ${person.address.street}
+                        </pre>
+                        <strong>All Object Keys:</strong> ${Object.keys(person).join(', ')}<br>
+                        <strong>All Object Values:</strong> ${JSON.stringify(Object.values(person))}
+                    </div>
+                `;
+            document.getElementById('objectOutput').innerHTML = output;
+        }
+
+        // 2. ARRAY INTRODUCTION
+        function demoArray() {
+            const fruits = ["Apple", "Banana", "Orange", "Mango", "Grapes"];
+            const numbers = [10, 20, 30, 40, 50];
+
+            let output = `
+                    <div class="output">
+                        <h3>🍎 Array: fruits</h3>
+                        <pre>
+    Length: ${fruits.length}
+    Index 0: ${fruits[0]}
+    Index 2: ${fruits[2]}
+    Last Item: ${fruits[fruits.length - 1]}
+                        </pre>
+                        <strong>Access by Index:</strong><br>
+                        fruits[0] = ${fruits[0]}<br>
+                        fruits[1] = ${fruits[1]}<br>
+                        fruits[4] = ${fruits[4]}
+                    </div>
+                `;
+            document.getElementById('arrayOutput').innerHTML = output;
+        }
+
+        // 3. CALL STACK DEMO
+        function demoCallStack() {
+            function task3() {
+                return "Task 3 ✅";
+            }
+
+            function task2() {
+                const result = task3();
+                return `Task 2 → ${result}`;
+            }
+
+            function task1() {
+                const result = task2();
+                return `Task 1 → ${result}`;
+            }
+
+            const finalResult = task1();
+
+            let output = `
+                    <div class="output">
+                        <h3>📊 Call Stack Execution</h3>
+                        <pre>
+    Final Result: ${finalResult}
+    
+    CALL STACK ORDER:
+    task1() ← top of stack
+      ↓ calls
+    task2() 
+      ↓ calls  
+    task3() ← executes first
+      ↑ returns
+    task2() ← returns
+      ↑ returns
+    task1() ← returns
+                        </pre>
+                    </div>
+                `;
+            document.getElementById('callStackOutput').innerHTML = output;
+        }
+
+        // 4. ARRAY METHODS: join() & pop()
+        function demoArrayMethods() {
+            const colors = ["Red", "Green", "Blue", "Yellow", "Purple"];
+
+            // Clone array to show pop effect
+            let colorsCopy = [...colors];
+            const poppedColor = colorsCopy.pop();
+
+            let output = `
+                    <div class="output">
+                        <h3>🎨 Array Methods Demo</h3>
+                        <pre>
+    Original Array: ${JSON.stringify(colors)}
+    
+    🔗 JOIN METHOD:
+    colors.join(', ') = "${colors.join(', ')}"
+    colors.join(' | ') = "${colors.join(' | ')}"
+    colors.join(' ➤ ') = "${colors.join(' ➤ ')}"
+    
+    🗑️ POP METHOD (removes last item):
+    Before pop: ${JSON.stringify(colors)}
+    Popped: ${poppedColor}
+    After pop: ${JSON.stringify(colorsCopy)}
+    New length: ${colorsCopy.length}
+                        </pre>
+                    </div>
+                `;
+            document.getElementById('arrayMethodsOutput').innerHTML = output;
+        }
+    </script>
+</body>
+</html>
